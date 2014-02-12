@@ -53,8 +53,9 @@ Lastly, the default server is a 1GB Performance cloud server with Ubuntu 12.04. 
 
 ## How to Use
 
-Once you are done editing your vagrant-rackspace.rc file, boot your Rackspace cloud servers as you would any Vagrant project and allow Vagrant to bootstrap your server with the Ansible playbooks:
+Once you are done editing your vagrant-rackspace.rc file, source it and boot your Rackspace cloud servers as you would any Vagrant project. Vagrant will bootstrap your server with the Ansible playbooks as configured:
 
+    source vagrant-rackspace.rc
     cd project_dir/
     vagrant up --provider=rackspace
 
