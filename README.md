@@ -44,7 +44,6 @@ Now, you can export configuration for the public key to be used, and your local 
 You can also export the following optional environmental variables, again included in the vagrant-rackspace.rc file. This is also their defaults in the plugin if not set at all:
 
     RS_RACKCONNECT=false
-    RS_MANAGED=false
     RS_REGION=ORD
 
 Lastly, the default server is a 1GB Performance cloud server with Ubuntu 12.04. You are free to configure this with the following environmental variables:
