@@ -1,0 +1,45 @@
+# encoding: utf-8
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = '2'
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # options are documented and commented below. For a complete reference,
+  # please see the online documentation at vagrantup.com.
+
+  # Name and build one server
+  config.vm.define :postgres do |postgres|
+  end
+
+  # Every Vagrant virtual environment requires a box to build off of.
+  config.vm.box = 'dummy'
+  config.vm.box_url = 'https://github.com/mitchellh/vagrant-rackspace/raw/master/dummy.box'
+
+  config.ssh.private_key_path = ENV['RS_KEYPATH'] if ENV['RS_KEYPATH']
+
+  config.vm.provider :rackspace do |rs|
+    rs.username = ENV['OS_USERNAME'] if ENV['OS_USERNAME']
+    rs.api_key  = ENV['OS_PASSWORD'] if ENV['OS_PASSWORD']
+
+    if ENV['RS_FLAVOR']
+      rs.flavor = ENV['RS_FLAVOR'] else rs.flavor = 'performance1-1'
+    end
+    if ENV['RS_IMAGE']
+      rs.image = ENV['RS_IMAGE'] else rs.flavor = /Ubuntu 12.04/
+    end
+
+    rs.rackspace_region = ENV['RS_REGION'] if ENV['RS_REGION']
+
+    rs.key_name = ENV['RS_KEYNAME'] if ENV['RS_KEYNAME']
+    rs.rackconnect = ENV['RS_RACKCONNECT'] if ENV['RS_RACKCONNECT']
+  end
+
+  config.vm.provision 'ansible' do |ansible|
+    ansible.playbook = 'elasticsearch.yml'
+    ansible.host_key_checking = false
+  end
+
+end
